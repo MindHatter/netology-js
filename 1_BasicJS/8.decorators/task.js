@@ -32,7 +32,7 @@ function debounceDecoratorNew(func, ms) {
     console.log(count);
     if (!flag){
       flag = true;
-      setTimeout(() => flag = false, ms);
+      setTimeout(() => flag = false, timeout);
       return func(...args);
     }
   }
