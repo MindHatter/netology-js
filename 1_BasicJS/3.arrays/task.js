@@ -1,11 +1,7 @@
 'use strict';
 
 function compareArrays(arr1, arr2) {
-  let result = true;
-
-  // Ваш код
-  result = arr1.length === arr2.length && arr1.every((x => arr1.indexOf(x) === arr2.indexOf(x)));
-  return result; // boolean
+  return arr1.length === arr2.length && arr1.every((val, idx) => val === arr2[idx]);
 }
 
 function advancedFilter(arr) {
