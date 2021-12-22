@@ -29,10 +29,12 @@ class AlarmClock{
     }
 
     start(){
+        let context = this
         function checkClock(alarm) {
-            if (alarm.time === this.getCurrentFormattedTime()) {
+            if (alarm.time === context.getCurrentFormattedTime()) {
                 alarm.callback();
             }
+            console.log('checked');
         }
 
         if (this.timerId === null) {
