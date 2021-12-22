@@ -8,11 +8,11 @@ class AlarmClock{
 
     addClock(time, callback, id){
         if (id === undefined){
-            throw new Error('error text');
+            throw new Error('Error text');
         } else if (this.alarmCollection.some(x => x.id === id)){
             console.error('Already exist');
         } else {
-            this.alarmCollection.push({id:id, time: time, callback: callback})
+            this.alarmCollection.push({id, time, callback})
         }
     }
 
@@ -21,16 +21,32 @@ class AlarmClock{
     }
 
     getCurrentFormattedTime(){
-        let today = new Date();
-        return today.getHours() + ":" + today.getMinutes();
+        let today = new Date().toLocaleTimeString("ru-Ru", {
+            hour: "2-digit",
+            minute: "2-digit",
+        });
+        return today
     }
 
     start(){
-        
+        function checkClock(alarm) {
+            if (alarm.time === this.getCurrentFormattedTime()) {
+                alarm.callback();
+            }
+        }
+
+        if (this.timerId === null) {
+            this.timerId = setInterval(() => {
+                this.alarmCollection.forEach(x => checkClock(x));
+            }, 1000);
+        }
     }
 
     stop(){
-
+        if (this.timerId != null) {
+            clearInterval(this.timerId);
+            this.timerId = null;
+        }
     }
 
     printAlarms(){
@@ -38,6 +54,7 @@ class AlarmClock{
     }
 
     clearAlarms(){
+        this.stop();
         this.alarmCollection = [];
     }
 }
