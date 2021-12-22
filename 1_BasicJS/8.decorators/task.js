@@ -23,18 +23,25 @@ function cachingDecoratorNew(func) {
 
 function debounceDecoratorNew(func, ms) {
   // Ваш код
-  let timeout = ms;
+  let timeout;
   let flag = false;
-  let count = 0;
-
+  
   function wrapper (...args){
-    count += 1;
-    console.log(count);
+    wrapper.count += 1;
     if (!flag){
       flag = true;
-      setTimeout(() => flag = false, timeout);
-      return func(...args);
+      func.apply(this, args);
+      wrapper.count += 1;
+    } else {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => { 
+        flag = false;
+        func.apply(this, args);
+        wrapper.count += 1; 
+      }, ms);
     }
-  }
+  } 
+  wrapper.count = 0;
   return wrapper;
 }
+
