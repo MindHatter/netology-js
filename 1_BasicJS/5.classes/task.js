@@ -82,7 +82,7 @@ class Library {
     giveBookByName(bookName){
         let result = this.findBookBy("name", bookName);
         if (result){
-            this.books.splice(this.books.indexOf(result));
+            this.books.splice(this.books.indexOf(result), 1);
         } else{
             result = null;
         }
